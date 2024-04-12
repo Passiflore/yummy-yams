@@ -1,5 +1,31 @@
 version: "3.9"
+
 services:
+  app:
+    build: ./app
+    ports: 
+      - 5173:5173
+      - 3010:3010
+    volumes: 
+      - ./app:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      NODE_ENV: developpement
+    depends_on:
+      - api
+
+  api:
+    build: ./api
+    ports: 
+      - 3001:3001
+    volumes:
+      - ./api:/usr/src/api
+    environment:
+      NODE_ENV: developpement
+      PORT: 3000
+    depends_on:
+      - mongo
+
   mongo:
     image: mongo:latest
     restart: always
@@ -21,4 +47,4 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: passi
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
       ME_CONFIG_MONGODB_URL: mongodb://passi:example@mongo:27017/
-      ME_CONFIG_BASICAUTH: false
+      ME_CONFIG_BASICAUTH: "false"
