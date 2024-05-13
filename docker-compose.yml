@@ -12,6 +12,7 @@ services:
     environment:
       NODE_ENV: developpement
       VITE_API_URL: http://localhost:3000
+      JWT_SECRET: secret
     depends_on:
       - api
 

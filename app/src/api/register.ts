@@ -1,7 +1,7 @@
 import { User } from "../interfaces/auth.interface";
 
-export const loginUser = async (connectionPayload: User) => {
-	const response = await fetch(import.meta.env.VITE_API_URL + "/login", {
+export const registerUser = async (connectionPayload: User) => {
+	const response = await fetch(import.meta.env.VITE_API_URL + "/register", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",

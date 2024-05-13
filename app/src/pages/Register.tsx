@@ -1,15 +1,15 @@
 import { useForm } from "@tanstack/react-form";
-import { useLogUserIn } from "../hooks/auth";
+import { useRegisterUser } from "../hooks/register";
 
-function Login() {
-	const LogUserIn = useLogUserIn();
-	const authForm = useForm({
+function Register() {
+	const RegisterUser = useRegisterUser();
+	const registerForm = useForm({
 		defaultValues: {
 			username: "",
 			password: "",
 		},
 		onSubmit: ({ value }) => {
-			LogUserIn.mutate(value, {
+			RegisterUser.mutate(value, {
 				onSuccess(data, variables, context) {
 					console.log(data);
 				},
@@ -19,16 +19,16 @@ function Login() {
 
 	return (
 		<>
-			<p>Login Page</p>
+			<p>Register Page</p>
 			<form
 				onSubmit={(e) => {
 					e.preventDefault();
 					e.stopPropagation();
-					authForm.handleSubmit();
+					registerForm.handleSubmit();
 				}}
 			>
 				<div>
-					<authForm.Field
+					<registerForm.Field
 						name="username"
 						children={(field) => (
 							<>
@@ -43,7 +43,7 @@ function Login() {
 							</>
 						)}
 					/>
-					<authForm.Field
+					<registerForm.Field
 						name="password"
 						children={(field) => (
 							<>
@@ -59,11 +59,11 @@ function Login() {
 							</>
 						)}
 					/>
-					<button type="submit">Login</button>
+					<button type="submit">Register</button>
 				</div>
 			</form>
 		</>
 	);
 }
 
-export default Login;
+export default Register;

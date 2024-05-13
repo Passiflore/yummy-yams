@@ -1,8 +1,10 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
 import { authRouter } from "./routers/authRouter";
+import cors from "cors";
 
 const app: Express = express();
+app.use(cors({ origin: "*" }));
 
 dotenv.config();
 const PORT: string | number = process.env.PORT || 3000;
