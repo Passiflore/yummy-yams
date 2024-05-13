@@ -3,26 +3,30 @@ version: "3.9"
 services:
   app:
     build: ./app
-    ports: 
+    ports:
       - 5173:5173
       - 3010:3010
-    volumes: 
+    volumes:
       - ./app:/usr/src/app
       - /usr/src/app/node_modules
     environment:
       NODE_ENV: developpement
+      VITE_API_URL: http://localhost:3000
     depends_on:
       - api
 
   api:
     build: ./api
-    ports: 
-      - 3001:3001
+    ports:
+      - 3000:3000
     volumes:
       - ./api:/usr/src/api
+      - /usr/src/api/node_modules
     environment:
       NODE_ENV: developpement
+      MONGO_URI: mongodb://passi:example@mongo:27017/
       PORT: 3000
+      JWT_SECRET: secret
     depends_on:
       - mongo
 

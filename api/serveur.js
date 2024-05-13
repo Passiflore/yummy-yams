@@ -1,1 +1,0 @@
-console.log("hello à tous les amis c'est David Lafarge pokemon")
