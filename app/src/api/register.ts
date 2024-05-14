@@ -8,6 +8,11 @@ export const registerUser = async (connectionPayload: User) => {
 		},
 		body: JSON.stringify(connectionPayload),
 	});
+
 	const data = await response.json();
+	if (response.status !== 200) {
+		throw new Error(data.message);
+	}
+
 	return data;
 };

@@ -18,12 +18,14 @@ export const registerServices = (res: Response, userPayload: IUser) => {
 				userPayload.password = hashedPassword;
 			});
 			await User.create(userPayload);
-			res.send("User created successfully");
+			res.status(200).send({ message: "User created successfully" });
 		} catch (error: any) {
 			if (error.code === 11000) {
-				return res.status(409).send("Username already exists");
+				return res
+					.status(409)
+					.send({ message: "Username or email already exists" });
 			}
-			return res.status(500).send("Internal Server Error");
+			return res.status(500).send({ message: "Internal Server Error" });
 		}
 	});
 };
@@ -31,39 +33,32 @@ export const registerServices = (res: Response, userPayload: IUser) => {
 export const loginServices = async (userPayload: IUser, res: Response) => {
 	db("users").then(async () => {
 		try {
-			User.findOne({ username: userPayload.username }).then(
-				async (user: any) => {
-					if (!user) {
-						return res.status(404).send("User not found");
-					}
-					const validPassword = await bcrypt.compare(
-						userPayload.password,
-						user.password
-					);
-					if (!validPassword) {
-						return res.status(401).send("Invalid Password");
-					}
-
-					const jwtToken = jwt.sign(
-						{ username: userPayload.username },
-						process.env.JWT_SECRET as string,
-						{ expiresIn: "1h" }
-					);
-
-					return res.status(200).send({ token: jwtToken });
+			User.findOne({ email: userPayload.email }).then(async (user: any) => {
+				if (!user) {
+					return res.status(404).send({ message: "User not found" });
 				}
-			);
+				const validPassword = await bcrypt.compare(
+					userPayload.password,
+					user.password
+				);
+				if (!validPassword) {
+					return res.status(401).send({ message: "Invalid Password" });
+				}
+
+				const jwtToken = jwt.sign(
+					{
+						username: userPayload.username,
+						email: userPayload.email,
+						nbOfGames: userPayload.nbOfGames,
+					},
+					process.env.JWT_SECRET as string,
+					{ expiresIn: "1h" }
+				);
+
+				return res.status(200).send({ token: jwtToken });
+			});
 		} catch (error: any) {
 			console.log(error);
 		}
 	});
 };
-
-// if(!user){
-//     return "User not found"
-// }
-// const validPassword = await bcrypt.compare(userPayload.password, user.password)
-// if(!validPassword){
-//     return "Invalid Password"
-// }
-// return "Login Successful"
