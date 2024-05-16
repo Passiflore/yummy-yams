@@ -1,4 +1,4 @@
-import express, { Express } from "express";
+import express from "express";
 import { handleLogin, handleRegister } from "../controllers/authController";
 import { body } from "express-validator";
 

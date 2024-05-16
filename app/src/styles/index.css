@@ -1,0 +1,103 @@
+@font-face {
+	font-family: "Kirsty";
+	src: url("../src/font/kirsty-rg.otf") format("opentype");
+	font-weight: normal;
+	font-style: normal;
+}
+
+* {
+	font-family: "Kirsty", sans-serif;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background: #ffe9ba;
+}
+
+.home-title {
+	margin-top: 60px;
+}
+
+.card-container {
+	display: flex;
+	flex-direction: column;
+	gap: 60px;
+	width: 1231px;
+	height: 852px;
+	align-items: center;
+	background-image: url(../img/backgroundCard.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	border-radius: 40px;
+	border: 15px solid #4c011f;
+}
+
+.hidden {
+	display: none;
+}
+
+.card {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	align-items: center;
+	justify-content: space-between;
+	height: 100%;
+	padding: 115px 0;
+}
+
+.card-title {
+	font-size: 90px;
+	color: #4c011f;
+	text-transform: uppercase;
+}
+
+h3,
+p {
+	margin: 0;
+}
+
+.button {
+	height: 75px;
+	cursor: pointer;
+	color: #4c031e;
+	border-radius: 10px;
+	border: 5px solid #4c031e;
+	transition: 0.4s;
+	padding: 0 12px;
+}
+
+.button-inside {
+	padding: 6px 34px;
+	border-radius: 10px;
+	border: 3px solid #4c031e;
+	font-size: 20px;
+	text-transform: uppercase;
+}
+
+.pink-button {
+	background-color: #cf203c;
+}
+
+.orange-button {
+	background-color: #e4903b;
+}
+
+.brown-button {
+	background-color: #cf5520;
+}
+
+.button:hover {
+	background-color: #4c011f;
+	color: #ffe9ba;
+}
+
+.error-message {
+	color: #e1193a;
+	font-size: 16px;
+}

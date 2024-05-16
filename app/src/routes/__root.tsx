@@ -1,17 +1,38 @@
-import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
+import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
+import { useGetUserDatas, useUserStore } from "../hooks/user";
+import { useEffect } from "react";
 
 export const Route = createRootRoute({
-	component: () => (
+	component: Root,
+});
+
+function Root() {
+	const { data } = useGetUserDatas();
+	const userStore = useUserStore();
+	useEffect(() => {
+		if (data) {
+			userStore.setIsConnected(true);
+			userStore.setNbOfGames(data.nbOfGames);
+			userStore.setPrizes(data.prizes);
+			userStore.setUsername(data.username);
+			userStore.setAlreadyPlayed(data.alreadyPlayed);
+			userStore.setDiceRolls(data.diceRolls);
+			userStore.setHaveWon(data.haveWon);
+
+			if (data.haveWon) {
+				toast.success("You won a prize! 🎉");
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [data]);
+
+	return (
 		<>
 			<Toaster reverseOrder={false} />
-			<div>
-				<Link to="/">Home</Link> <Link to="/about">About</Link>{" "}
-				<Link to="/login">Login</Link> <Link to="/register">Register</Link>
-			</div>
 			<Outlet />
 			<TanStackRouterDevtools />
 		</>
-	),
-});
+	);
+}

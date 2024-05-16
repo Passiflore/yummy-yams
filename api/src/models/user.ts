@@ -1,8 +1,9 @@
-import { model } from "mongoose";
+import mongoose, { model } from "mongoose";
 import { IUser } from "../interfaces/user";
 import userSchema from "../schemas/user";
 
-
-const User = model<IUser>("User", userSchema)
+const User = mongoose.connection
+	.useDb("users")
+	.model<IUser>("User", userSchema);
 
 export default User;
